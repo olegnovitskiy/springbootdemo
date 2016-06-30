@@ -1,31 +1,52 @@
 package com.example;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Arrays;
+import java.util.Collection;
 
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
+
+    @Bean
+    CommandLineRunner runner(ReservationRepository rr) {
+        return args -> {
+            Arrays.asList("Alex,Bob,Bill,Jack,Samon".split(","))
+                    .forEach(n->rr.save(new Reservation(n)));
+
+            rr.findAll().forEach(System.out::println);
+            rr.findByName("Bill").forEach(System.out::println);
+        };
+    }
+}
+
+interface ReservationRepository extends JpaRepository<Reservation, Long> {
+    // select * from reservations where name = :rn
+    Collection<Reservation> findByName(String rn);
 }
 
 @Entity
-class Reservations {
+class Reservation {
     @Id
     @GeneratedValue
     private Long id;
 
     private String name;
 
-    public Reservations() {     // why JPA, Why?
+    public Reservation() {     // why JPA, Why?
     }
 
-    Reservations(String name) {
+    Reservation(String name) {
         this.name = name;
     }
 
@@ -35,7 +56,7 @@ class Reservations {
 
     @Override
     public String toString() {
-        return "Reservations{" +
+        return "Reservation{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
