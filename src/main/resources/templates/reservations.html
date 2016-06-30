@@ -1,0 +1,16 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bootiful Reservations</title>
+</head>
+<body>
+<h1>Reservations</h1>
+<div th:each="r : ${reservations}">
+    <div>
+        <b th:text="${r.id}">ID</b> -
+        <span th:text="${r.reservationName}">Reservation Name</span>
+    </div>
+</div>
+</body>
+</html>

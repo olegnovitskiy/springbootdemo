@@ -12,6 +12,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,6 +53,19 @@ class ReservationResourcrProcessor implements ResourceProcessor<Resource<Reserva
 
         return reservationResource;
     }
+}
+
+@Controller
+class ReservationMvcController {
+    @RequestMapping("/reservations.php")
+    String reservations(Model model) {
+        model.addAttribute("reservations", reservationRepository.findAll());
+
+        return "reservations";  // src/main/resources/templates/ + $X + .html
+    }
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 }
 
 @RepositoryRestResource
