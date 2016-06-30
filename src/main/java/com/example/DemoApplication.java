@@ -21,11 +21,14 @@ public class DemoApplication {
     @Bean
     CommandLineRunner runner(ReservationRepository rr) {
         return args -> {
-            Arrays.asList("Alex,Bob,Bill,Jack,Samon".split(","))
+            Arrays.asList("Alex,Bob,Bill,Jack,Samon,Rob".split(","))
                     .forEach(n->rr.save(new Reservation(n)));
 
             rr.findAll().forEach(System.out::println);
+            System.out.println("Search Bob ...");
             rr.findByName("Bill").forEach(System.out::println);
+            System.out.println("Search all users ending with 'ob' ...");
+            rr.findByNameEndingWith("ob").forEach(System.out::println);
         };
     }
 }
@@ -33,6 +36,7 @@ public class DemoApplication {
 interface ReservationRepository extends JpaRepository<Reservation, Long> {
     // select * from reservations where name = :rn
     Collection<Reservation> findByName(String rn);
+    Collection<Reservation> findByNameEndingWith(String endings);
 }
 
 @Entity
