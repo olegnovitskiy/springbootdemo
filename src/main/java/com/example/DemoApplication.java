@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,21 +38,12 @@ public class DemoApplication {
     }
 }
 
+@RepositoryRestResource
 interface ReservationRepository extends JpaRepository<Reservation, Long> {
     // select * from reservations where name = :rn
-    Collection<Reservation> findByName(String rn);
-    Collection<Reservation> findByNameEndingWith(String endings);
-}
-
-@RestController
-class ReservationRestController {
-    @RequestMapping("/reservations")
-    Collection<Reservation> reservations() {
-        return reservationRepository.findAll();
-    }
-
-    @Autowired
-    private ReservationRepository reservationRepository;
+    Collection<Reservation> findByName(@Param("rn") String rn);
+    // select * from reservations where name like '%':endings
+    Collection<Reservation> findByNameEndingWith(@Param("endings") String endings);
 }
 
 @Entity
