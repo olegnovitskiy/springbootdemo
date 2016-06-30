@@ -1,10 +1,13 @@
 package com.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +40,17 @@ interface ReservationRepository extends JpaRepository<Reservation, Long> {
     // select * from reservations where name = :rn
     Collection<Reservation> findByName(String rn);
     Collection<Reservation> findByNameEndingWith(String endings);
+}
+
+@RestController
+class ReservationRestController {
+    @RequestMapping("/reservations")
+    Collection<Reservation> reservations() {
+        return reservationRepository.findAll();
+    }
+
+    @Autowired
+    private ReservationRepository reservationRepository;
 }
 
 @Entity
