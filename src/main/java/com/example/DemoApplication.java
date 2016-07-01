@@ -23,6 +23,17 @@ import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.Collection;
 
+/*
+SSH commands
+
+1) java type java.lang.String
+2) system propls
+3) endpoint list
+4) endpoint invoke healthEndpoint
+5) metrics
+6) dashboard
+ */
+
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {
