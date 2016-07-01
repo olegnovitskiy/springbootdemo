@@ -3,6 +3,8 @@ package com.example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -52,6 +54,11 @@ public class DemoApplication {
             System.out.println("Search all users ending with 'ob' ...");
             rr.findByNameEndingWith("ob").forEach(System.out::println);
         };
+    }
+
+    @Bean
+    HealthIndicator healthIndicator() {
+        return () -> Health.status("Ahow there!").build();
     }
 }
 
