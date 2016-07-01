@@ -36,6 +36,10 @@ SSH commands
 6) dashboard
  */
 
+/*
+java -Dserver.port=8002 -jar target/demo-0.0.1-SNAPSHOT.jar
+ */
+
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {

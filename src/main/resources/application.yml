@@ -1,0 +1,6 @@
+server: 
+  port: 8004
+
+management:
+  port: 9004
+  context-path: /admin
